@@ -1,0 +1,131 @@
+{% extends 'website/main.html' %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(135deg, #ffe6f0 0%, #ffd1e8 100%);
+        font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+    }
+
+    .kitty-list-title {
+        text-align: center;
+        color: #ff5c8d;
+        font-size: 28px;
+        font-weight: bold;
+        margin: 40px 0 25px;
+        text-shadow: 1px 1px 0px #ffd1e0;
+    }
+
+    .kitty-list-wrapper {
+        max-width: 600px;
+        margin: 0 auto 60px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 0 20px;
+    }
+
+    .kitty-card {
+        background: #ffffff;
+        border: 3px solid #ffb6d1;
+        border-radius: 25px;
+        padding: 20px 25px;
+        position: relative;
+        box-shadow: 0 6px 15px rgba(255, 105, 150, 0.25);
+        transition: transform 0.2s ease;
+    }
+
+    .kitty-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(255, 105, 150, 0.35);
+    }
+
+    .kitty-card::before {
+        content: "🐾";
+        position: absolute;
+        top: -14px;
+        left: 20px;
+        background: #fff;
+        padding: 0 8px;
+        font-size: 20px;
+    }
+
+    .kitty-food-name {
+        color: #d1477a;
+        font-size: 19px;
+        font-weight: bold;
+        margin: 0 0 12px;
+        padding-right: 60px;
+    }
+
+    .kitty-stats {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .kitty-stat {
+        background: #fff5f9;
+        border: 1px solid #ffd1e0;
+        border-radius: 12px;
+        padding: 5px 12px;
+        font-size: 13px;
+        color: #7a3b52;
+    }
+
+    .kitty-stat strong {
+        color: #ff5c8d;
+    }
+
+    .kitty-edit-link {
+        position: absolute;
+        top: 18px;
+        right: 20px;
+        text-decoration: none;
+        background: #ff8fb3;
+        color: #fff;
+        font-size: 13px;
+        font-weight: bold;
+        padding: 6px 14px;
+        border-radius: 15px;
+        transition: all 0.2s ease;
+    }
+
+    .kitty-edit-link:hover {
+        background: #ff5c8d;
+        transform: scale(1.05);
+    }
+
+    .kitty-empty {
+        text-align: center;
+        color: #d18aa5;
+        font-size: 15px;
+        margin-top: 40px;
+    }
+</style>
+
+<div class="kitty-list-title">🎀 Your Calorie Log 🎀</div>
+
+<div class="kitty-list-wrapper">
+    {% for calorie in calories %}
+    <a href="{% url 'deletetotalcalories' calorie.id %}"> delete </a>
+
+
+    <div class="kitty-card">
+        <a href="{% url 'updatetotalcalories' calorie.id %}" class="kitty-edit-link">✏️ Edit</a>
+
+        <p class="kitty-food-name">🍓 {{ calorie.food }}</p>
+        <div class="kitty-stats">
+            <span class="kitty-stat"><strong>{{ calorie.calories }}</strong> cal</span>
+            <span class="kitty-stat"><strong>{{ calorie.protein }}g</strong> protein</span>
+            <span class="kitty-stat"><strong>{{ calorie.fiber }}g</strong> fiber</span>
+            <span class="kitty-stat"><strong>{{ calorie.carb }}g</strong> carb</span>
+            <span class="kitty-stat"><strong>{{ calorie.quantity }}</strong> qty</span>
+        </div>
+    </div>
+    {% empty %}
+    <p class="kitty-empty">No entries yet, cutie! Go log your first meal 🐱🍰</p>
+    {% endfor %}
+</div>
+{% endblock %}

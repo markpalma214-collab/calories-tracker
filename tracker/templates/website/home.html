@@ -1,0 +1,126 @@
+{% extends 'website/main.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    body {
+        background: linear-gradient(135deg, #ffe6f0 0%, #ffd1e8 100%);
+        font-family: 'Comic Sans MS', 'Segoe UI', sans-serif;
+    }
+
+    .kitty-container {
+        max-width: 500px;
+        margin: 60px auto;
+        background: #ffffff;
+        border: 4px solid #ff8fb3;
+        border-radius: 30px;
+        padding: 30px;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(255, 105, 150, 0.35);
+        position: relative;
+    }
+
+    .kitty-container::before {
+        content: "🎀";
+        font-size: 40px;
+        position: absolute;
+        top: -25px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #fff;
+        padding: 0 10px;
+    }
+
+    .kitty-title {
+        color: #ff5c8d;
+        font-size: 28px;
+        font-weight: bold;
+        margin-bottom: 5px;
+        text-shadow: 1px 1px 0px #ffd1e0;
+    }
+
+    .kitty-subtitle {
+        color: #d16a8a;
+        font-size: 14px;
+        margin-bottom: 25px;
+    }
+
+    .kitty-nav {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .kitty-link {
+        display: block;
+        text-decoration: none;
+        background: #ffeaf3;
+        border: 2px solid #ffb6d1;
+        color: #d1477a;
+        font-weight: bold;
+        font-size: 16px;
+        padding: 14px 20px;
+        border-radius: 20px;
+        transition: all 0.25s ease;
+    }
+
+    .kitty-link:hover {
+        background: #ff8fb3;
+        color: #fff;
+        transform: scale(1.03);
+        box-shadow: 0 6px 15px rgba(255, 105, 150, 0.4);
+    }
+
+    .kitty-emoji {
+        margin-right: 8px;
+    }
+
+    .kitty-footer {
+        margin-top: 25px;
+        font-size: 12px;
+        color: #d18aa5;
+    }
+    .categories {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+</style>
+
+<div class="kitty-container">
+    <div class="kitty-title">🐱 Calorie Tracker</div>
+    <div class="kitty-subtitle">Stay cute, stay healthy!</div>
+
+    <div class="kitty-nav">
+        <a class="kitty-link" href="{% url 'tracker' %}">
+            <span class="kitty-emoji">🍓</span>Submit your calorie intake
+        </a>
+        <a class="kitty-link" href="{% url 'totalcalories' %}">
+            <span class="kitty-emoji">🎀</span>Check your total calories for the day
+        </a>
+        <a class="kitty-link" href="{% url 'view' %}">
+            <span class="kitty-emoji">🐾</span>Check your output
+        </a>
+        <a class="kitty-link" href="{% url 'history' %}">
+            <span class="kitty-emoji">🐾</span>Check your history
+        </a>
+    </div>
+
+    <div class="kitty-footer">made with love & bows ♡</div>
+</div>
+<div class="categories">
+    Browse Categories
+
+    {% for calorie in Category %}
+    <a href="{% url 'home' %}?q={{ calorie.category }}"> {{ calorie.category }}
+</a>
+    {% endfor %}
+</div>
+<div>
+    {% for calorie in foods %}
+    <p>Food: {{ calorie.food }}</p>
+    <p>Calories: {{ calorie.calories }}
+</p>
+    {% endfor %}
+</div>
+{% endblock %}
